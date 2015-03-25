@@ -1,53 +1,53 @@
 ;======================================================================
 ;数字&記号入力
-; vk1Csc079 = 変換キー
+; sc079 = 変換キー
 ;======================================================================
 ;;qwertyuiopキー
-vk1Csc079 & q::SendPlay,{`!}
-vk1Csc079 & w::
+sc079 & q::SendPlay,{`!}
+sc079 & w::
   if GetKeyState("Ctrl", "P")
     SendPlay,{`"}{`"}{Left}
   else
     SendPlay,{`"}
-  return
-vk1Csc079 & e::SendPlay,{`#}
-vk1Csc079 & r::SendPlay,{`$}
-vk1Csc079 & t::SendPlay,{`%}
-vk1Csc079 & y::SendPlay,{`&}
-vk1Csc079 & u::SendPlay,{`'}
-vk1Csc079 & i::
+    return
+sc079 & e::SendPlay,{`#}
+sc079 & r::SendPlay,{`$}
+sc079 & t::SendPlay,{`%}
+sc079 & y::SendPlay,{`&}
+sc079 & u::SendPlay,{`'}
+sc079 & i::
   if GetKeyState("Ctrl", "P")
     SendPlay,{(}{)}{Left}
   else
     SendPlay,{(}
   return
-vk1Csc079 & o::SendPlay,{)}
-vk1Csc079 & p::SendPlay,{`-}
+sc079 & o::SendPlay,{)}
+sc079 & p::SendPlay,{`-}
 
 ;;asdfghjkl;:]キー
-vk1Csc079 & a::SendPlay,{1}
-vk1Csc079 & s::SendPlay,{2}
-vk1Csc079 & d::SendPlay,{3}
-vk1Csc079 & f::SendPlay,{4}
-vk1Csc079 & g::SendPlay,{5}
-vk1Csc079 & h::SendPlay,{6}
-vk1Csc079 & j::SendPlay,{7}
-vk1Csc079 & k::SendPlay,{8}
-vk1Csc079 & l::SendPlay,{9}
-vk1Csc079 & vkBBsc027::SendPlay,{0}
+sc079 & a::SendPlay,{1}
+sc079 & s::SendPlay,{2}
+sc079 & d::SendPlay,{3}
+sc079 & f::SendPlay,{4}
+sc079 & g::SendPlay,{5}
+sc079 & h::SendPlay,{6}
+sc079 & j::SendPlay,{7}
+sc079 & k::SendPlay,{8}
+sc079 & l::SendPlay,{9}
+sc079 & sc027::SendPlay,{0}
 
 ;;zxcvbnm,./\キー
-vk1Csc079 & x::SendPlay,{`=}
-vk1Csc079 & c::SendPlay,{^}
-vk1Csc079 & v::SendPlay,{`~}
-vk1Csc079 & b::SendPlay,{`|}
-vk1Csc079 & n::SendPlay,{`\}
-vk1Csc079 & m::SendPlay,{`%}
-vk1Csc079 & ,::SendPlay,{`#}
-vk1Csc079 & .::SendPlay,{`'}
+sc079 & x::SendPlay,{`=}
+sc079 & c::SendPlay,{^}
+sc079 & v::SendPlay,{`~}
+sc079 & b::SendPlay,{`|}
+sc079 & n::SendPlay,{`\}
+sc079 & m::SendPlay,{`%}
+sc079 & ,::SendPlay,{`#}
+sc079 & .::SendPlay,{`'}
 
 ;; [{「キーまとめ
-vk1Csc079 & [::
+sc079 & [::
   if GetKeyState("Ctrl", "P")
     SendPlay,{{}{}}{Left}
   ;else if GetkeyState("Shift", "P")

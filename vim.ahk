@@ -1,3 +1,6 @@
+; 使用キーの組み合わせ
+; 無変換+kye
+
 sc07B & 1::SendPlay,{Ctrl Down}{Home}{Ctrl Up}  ;1G
 
 sc07B & q::SendPlay,!{F4} ;:q
@@ -16,7 +19,7 @@ sc07B & u::SendPlay,^{z}
 
 sc07B & i::Send,{Blind}{Tab}
 
-sc07B & o::SendPlay,{End}{Enter}
+;sc07B & o::SendPlay,{End}{Enter}
 
 sc07B & p::SendPlay,^{v}
 
@@ -24,13 +27,13 @@ sc07B & [::SendPlay,{Esc}
 
 sc07B & a::Send,{Blind}{Home}
 
-sc07B & s::SendPlay,{Shift Down}{End}{Delete}{Shift Up}  ;D
+sc07B & s::SendPlay,+{End}+{Delete}  ;D
 
-sc07B & d::SendPlay,{Home}{Shift Down}{End}{Delete}{Shift Up}  ;dd
+sc07B & d::SendPlay,{Home}+{End}+{Delete}  ;dd
 
 sc07B & f::SendPlay,{PgDn}  ;^f
 
-sc07B & g::SendPlay,{Ctrl Down}{End}{Ctrl Up} ;G
+sc07B & g::SendPlay,^{End} ;G
 
 ;カーソル移動
 ;sc07B & h::modifierKey("Left")
@@ -42,8 +45,12 @@ sc07B & j::Send,{Blind}{Down}
 sc07B & k::Send,{Blind}{Up}
 sc07B & l::Send,{Blind}{Right}
 
-
-sc07B & z::SendPlay,{Ctrl Down}{S}{Ctrl Up}{Alt Down}{F4}{Alt Up} ;ZZ
+;;2回入力しないと起動しない
+sc07B & z::
+    if(A_PriorHotkey == A_ThisHotkey)&&(A_TimeSincePriorHotkey < 500){
+        SendPlay,^{S}!{F4} ;ZZ
+    }
+return
 
 sc07B & x::SendPlay,{Delete}
 
@@ -51,29 +58,47 @@ sc07B & c::SendPlay,{BS} ;X
 
 sc07B & b::SendPlay,{PgUp} ;^b
 
-sc07B & m::Send,{Blind}{Enter}
+sc07B & m::SendPlay,{Blind}{Enter}
 
-vkF2sc070::SendPlay,{vkF3sc029}  ;カひロキー=半角/全角
+;sc070::SendPlay,{vkF3sc029}  ;カひロキー=半角/全角
 
-vkFOscO3A::SendPlay,{Esc}  ;CapsLock=ESC
-;ビジュアルモード
-vimm=0
 sc07B & v::
-  if(vimm)
-    vimm=0
-  else
-    vimm=1
+    Send,+{Home}
+    Backup := ClipbpardAll
+    Send,^x
+    Send,{vkF4sc029}
+    Sleep,10
+    Send,%Clipboard%
+    Clipboard := Backup
 return
-#IF (vimm)
-;ビジュアル選択モードを切る
-Space::vimm=0
 
-sc07B & f::SendPlay,{Ctrl Down}{Shift Down}{PgDn}{Shift Up}{Ctrl Up}  ;^f
-sc07B & g::SendPlay,{Ctrl Down}{Shift Down}{End}{Shift Up}{Ctrl Up}
-sc07B & h::Send,{Shift Down}{Left}{Shift Up}
-sc07B & j::Send,{Shift Down}{Down}{Shift Up}
-sc07B & k::Send,{Shift Down}{Up}{Shift Up}
-sc07B & l::Send,{Shift Down}{Right}{Shift Up}
-sc07B & b::SendPlay,{Shift Down}{PgUp}{Shift Up} ;^b
+; ローマ字入力をひらがなに変換
+sc07B & Left::
+    Send, ^+{Left}
+    Backup:=ClipboardAll
+    Send, ^x{vkF4sc029}
+    Sleep, 10
+    Send, %Clipboard%
+    Clipboard:=Backup
+return
 
-#IF
+;ビジュアルモード
+; vimm=0
+; sc07B & v::
+;   if(vimm)
+;     vimm=0
+;   else
+;     vimm=1
+; return
+; #IF (vimm)
+; ;ビジュアル選択モードを切る
+; Space::vimm=0
+;
+; sc07B & f::SendPlay,^+{PgDn}  ;^f
+; sc07B & h::Send,+{Left}
+; sc07B & j::Send,+{Down}
+; sc07B & k::Send,+{Up}+
+; sc07B & l::Send,+{Right}
+; sc07B & b::SendPlay,^+{PgUp} ;^b
+;
+; #IF

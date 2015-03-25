@@ -28,30 +28,45 @@ h::MouseM(MMove-(MMove*2), 0)
 ;右
 l::MouseM(MMove, 0)
 ;左上
-u::MouseM(MMove-(MMove*2), MMove-(MMove*2))
+;u::MouseM(MMove-(MMove*2), MMove-(MMove*2))
 ;右上
-i::MouseM(MMove, MMove-(MMove*2))
+;i::MouseM(MMove, MMove-(MMove*2))
 ;左下
-n::MouseM(MMove-(MMove*2), MMove)
+;n::MouseM(MMove-(MMove*2), MMove)
 ;右下
-m::MouseM(MMove, MMove)
+;m::MouseM(MMove, MMove)
 
 ;クリック&ドラッグドロップ
-a::
+;a::
     Send,{LButton Down}
     KeyWait,a
     Send,{LButton Up}
   Return
-s::MouseClick, middle
-d::
+;s::MouseClick, middle
+;d::
+    Send,{RButton Down}
+    KeyWait,d
+    Send,{RButton Up}
+    Return
+u::
+    Send,{LButton Down}
+    KeyWait,a
+    Send,{LButton Up}
+  Return
+i::MouseClick, middle
+o::
     Send,{RButton Down}
     KeyWait,d
     Send,{RButton Up}
     Return
 
+
 ;マウスホイール
-f::MouseClick, WheelUp, , , 5
-v::MouseClick, WheelDown, , , 5
+;f::MouseClick, WheelUp, , , 5
+;v::MouseClick, WheelDown, , , 5
+n::MouseClick, WheelUp, , , 5
+m::MouseClick, WheelDown, , , 5
+
 
 ;マウスカーソルの移動量変更
 1::

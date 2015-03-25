@@ -2,26 +2,27 @@
 ;アプリケーション設定
 ;======================================================================
 
-;マーケットスピード
+;----------------------------------------------------------------------
+; マーケットスピード
 #IfWinActive, ahk_class MDIFrame
-;注文画面呼び出し
-;ワラント買い
+; 注文画面呼び出し
+; ワラント買い
   ^Numpad0::
     SendPlay,{F12}
-    ;ワラントコードのＫを入力
+    ; ワラントコードのＫを入力
     Sleep,500
     SendPlay,{T}
   return
-;ワラント売り
+; ワラント売り
   ^Numpad1::
     SendPlay,{F11}
-    ;最初の保有銘柄を選択
+    ; 最初の保有銘柄を選択
     Sleep,500
     SendPlay,{Down}
   return
 #IfWinActive
 
-;ウィンドウ別操作
+; ウィンドウ別操作
 #IfWinActive, Market Speed - ＷＲ買い注文
   ^NumpadAdd::SendPlay,{TAB}
 #IfWinActive
@@ -31,33 +32,39 @@
 #IfWinActive
 
 ;----------------------------------------------------------------------
-;コマンドプロンプトで貼り付けをCtrl+vで出来るようにする。
+; コマンドプロンプトで貼り付けをCtrl+vで出来るようにする。
 #IfWinActive ahk_class ConsoleWindowClass
   ^v::Send,!{Space}ep
 #IfWinActive
 
-;----------------------------------------------------------------------
-;firefox
+;--------------------------------------------------------------------------------
+; cygwin
+#IfWinActive ahk_class mintty
+  ~^v::Send,+{Insert}
+#IfWinActive
+; ----------------------------------------------------------------------
+; firefox
 #IfWinActive, ahk_class MozillaWindowClass
-  !g::Yank("D:\bin\GoogleChromePortable\GoogleChromePortable.exe --incognito --new-window --app=", 2)
+  ;!g::Yank("D:\bin\GoogleChromePortable\GoogleChromePortable.exe --incognito --new-window --app=", 2)
   ;!g::Yank("D:\bin\GoogleChromePortable\GoogleChromePortable.exe --incognito --new-window", 1)
-  !e::Yank("C:\Program Files\Internet Explorer\IEXPLORE.EXE", 1)
- !m::Yank("C:\Program Files\mikurima\mikurima.exe -nolist", 1) ;再生
-; !m::Yank("C:\Program Files\mikurima\mikurima.exe -later", 1) ;あとで見る
+  ;!e::Yank("C:\Program Files\Internet Explorer\IEXPLORE.EXE", 1)
+  ;!m::Yank("C:\Program Files\mikurima\mikurima.exe -nolist", 1) ;再生
+  ;!m::Yank("C:\Program Files\mikurima\mikurima.exe -later", 1) ;あとで見る
 
-  !r::  ;最小化でメモリ解放
+
+  !r::  ; 最小化でメモリ解放
     WinGetActiveTitle, title
     SendPlay,!{Space}{n}
     Sleep,1000
     WinRestore, %title%
   return
 
-;同時起動中のFirefoxにURLを渡す
-  !w::UrlPass("WebDevelopment Firefox")
-  !2::UrlPass("2ch Firefox")
+; 同時起動中のFirefoxにURLを渡す
+; !w::UrlPass("WebDevelopmentFirefox")
+; !2::UrlPass("2chFirefox")
 #IfWinActive
 
-;Modo 1=URLの前に空欄を入れる 2=URLを続けて送る
+; Modo 1=URLの前に空欄を入れる 2=URLを続けて送る
   Yank(EXEPath, Modo){
     ClipSaved:=ClipboardAll  ;クリップボードの内容を保存
       SendPlay,{y}  ;FirefoxURLをコピー
@@ -93,114 +100,141 @@ UrlPass(Title){
     Title=
 
 }
-
 ;----------------------------------------------------------------------
-;typict
-#IfWinActive, ahk_class WindowsForms10.Window.8.app.0.378734a
-	k::left
-#IfWinActive
+;; fenrir startkey:=Ctrl+\
+^sc073::SplitPath_Run("E:\bin\fenrir\fenrir.exe", " /t")
+;; UWSC タクスリストクリック startkey:=Ctrl+.
+;^sc034::Run, "E:\bin\uwsc\UWSC.exe" "E:\00work\nemo\script\uwsc\00Frequently-used\EntrustedSoftware.uws"
+;; Ctrl+Win 範囲指定スクリーンショット
+^F13::Run, "E:\bin1\rapture-2.1.1\rapture.exe"
+;; Ctrl+Alt+T cygwin起動
+^!T::Run,"C:\cygwin\Cygwin.bat"
 
-;----------------------------------------------------------------------
-;wipefile
 
-
-;----------------------------------------------------------------------
-;その鉱山の名は。
-#IfWinActive ahk_class TForm1
-  $z::
-    Loop
-    {
-      if !GetKeyState("z", "P")
-        break
-      Send,{LButton}
-      sleep,1
-    }
-  return
-  $x::Send,{RButton}
-  $a::Send,{z}
-#IfWinActive
-
-;----------------------------------------------------------------------
-;elona
-#IfWinActive ahk_class hspwnd0
-  sc07B & w::Send,{o}
-  sc07B & e::Send,{i}
-  sc07B & s::Send,{l}
-  sc07B & f::Send,{j}
-  ;テンキーにショートカット振り分け
-  sc07B & NumpadIns::elona_pass_key("0")
-  sc07B & NumpadEnd::elona_pass_key("1")
-  sc07B & NumpadDown::elona_pass_key("2")
-  sc07B & NumpadPgDn::elona_pass_key("3")
-  sc07B & NumpadLeft::elona_pass_key("4")
-  sc07B & NumpadClear::elona_pass_key("5")
-  sc07B & NumpadHome::elona_pass_key("7")
-  sc07B & NumpadRight::elona_pass_key("6")
-  sc07B & NumpadUp::elona_pass_key("8")
-  sc07B & NumpadPgUp::elona_pass_key("9")
-  ;木の実収穫
-  sc07B & b::
-    While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-      if !GetKeyState("b", "P") ;bキーを離すと停止
-        break
-      
-      Send,{Blind}{b}
-      Sleep,25
-      elona_pass_key("Up")
-    }
-  return   
-  ;連続使用ターゲット確定が5
-  sc07B & a::
-    While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-      elona_pass_key("2")
-      elona_pass_key("NumpadClear")
-      if GetKeyState("Ctrl", "P")  ;Ctrlで停止
-        break
-   }
-  return
-  ;連続使用ターゲット確定がEnter
-  sc07B & z::
-    While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-      elona_pass_key("2")
-      elona_pass_key("Enter")
-      if GetKeyState("Ctrl", "P")  ;Ctrlで停止
-        break
-   }
-  return
-  ;魔法書連続読み
-  sc07B & r::
-  While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-    elona_pass_key("r")
-    elona_pass_key("Enter")
-    if GetKeyState("Ctrl", "P")  ;Ctrlで停止
-      break
-  }
-  return
-  ;右移動 
-  !NumpadRight::
-  While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-    elona_pass_key("Right")
-    if GetKeyState("Ctrl", "P")  ;Ctrlで停止
-      break
-  }
-  return
-  ;足踏み
-  !NumpadClear::
-  Send,{Blind}{NumpadClear Down}
-  While (WinActive(ahk_class hspwnd0)) { ;ウィンドウが非アクティブになったら停止
-    if GetKeyState("Ctrl", "P")  ;Ctrlで停止
-      break
-    Sleep,25
-  }
-  Send,{Blind}{NumpadClear Up}
-  return
-#IfWinActive
-
-elona_pass_key(key) {
-  Send,{Blind}{%key% Down}
-  Sleep,25
-  Send,{Blind}{%key% Up}
-  Sleep,25
+;;プロセスをチェックして存在していればアクティブなければ、ソフト起動
+SplitPath_Run(FileSpec, StartupOptions) {
+    ;渡されたフルパスからソフト名の部分を分割
+    SplitPath, FileSpec, Name, Dir
+    sleep,100
+    ;プロセスがあるかチェック
+    Process, Exist, %Name%
+    if ErrorLevel <> 0
+      ;あればアクティブ
+      WinActivate, ahk_pid %ErrorLevel%
+    else
+      ;なければソフトを起動
+      ;起動オプションチェック
+      if (StartupOptions = ) {
+         Run, %FileSpec%, %Dir%
+      } else {
+         StartupOptionsRun:= FileSpec . StartupOptions
+         Run, %StartupOptionsRun%, %Dir%
+      }
 }
 
 
+
+;----------------------------------------------------------------------
+;; fenrirfs
+#If WinActive("ahk_class TFenrirFSMainForm.UnicodeClass")
+  ;Enter無効化
+  Enter::Return
+#If
+
+;----------------------------------------------------------------------
+;;; WhiteBrowser
+#IfWinActive,,WhiteBrowser
+  ControlGetFocus, cgf2, A
+  if (cgf2 = Internet Explorer_Server1) {
+     j::SendPlay,{Down}
+     k::SendPlay,{Up}
+  }
+
+#IfWinActive
+
+;----------------------------------------------------------------------
+;アプリ再起動 Win+Shift+Q
+#+Q::
+  WinGet, exefullpath, ProcessPath, A
+  WinGet, processpid, PID, A
+  WinClose, ahk_pid %processpid%
+  Process, WaitClose, %processpid%, 60 ;最大60秒待つ
+  if ErrorLevel <> 0
+    msgbox, プロセスが終了しなかったか、時間が掛かっています。スクリプトを終了します
+  else
+    Run, %exefullpath%
+  return
+
+;------------------------------------------------------------------------------
+;; Everything
+#IfWinActive, ahk_class EVERYTHING
+  ;ポチエスに渡す(Shift+Enter)
+  +Enter::
+    ControlGetText, text, msctls_statusbar321, ahk_class EVERYTHING
+    run, "E:\bin\esExt5\esExt5.exe" %text%
+  return
+
+  ;クリップボードにファイルパスをコピー(Ctrl+c
+  ^c::
+    ControlGetText, text, msctls_statusbar321, ahk_class EVERYTHING
+    Clipboard = %text%
+  return
+  ;検索に移動
+  /::
+    ControlFocus, Edit1, ahk_class EVERYTHING
+  return
+#IfWinActive
+
+;----------------------------------------------------------------------
+;; PotPlayer
+#If WinActive("ahk_class PotPlayer64") OR WinActive("ahk_class PotPlayer")
+  Enter::Send,!{F4}
+  j::Send,{Down}
+  k::Send,{Up}
+  i::Send,{Ctrl Down}{Left}{Ctrl Up}  ;10秒戻る
+  o::Send,{Ctrl Down}{Right}{Ctrl Up}  ;10秒進む
+  h::Send,{Left}       ;戻る
+  l::Send,{Right}       ;進む
+  n::Send,{Shift Down}{Left}{Shift Up}  ;1分戻る
+  m::Send,{Shift Down}{Right}{Shift Up}  ;1分進む
+#If
+
+;----------------------------------------------------------------------
+;; foobar2000
+#IfWinActive, ahk_class {97E27FAA-C0B3-4b8e-A693-ED7881E99FC1}
+    p::Run,E:\bin1\foobar2000\foobar2000.exe /play
+    n::Run,E:\bin1\foobar2000\foobar2000.exe /next
+    b::Run,E:\bin1\foobar2000\foobar2000.exe /prev
+    Space::Run,E:\bin1\foobar2000\foobar2000.exe /pause
+    s::Run,E:\bin1\foobar2000\foobar2000.exe /stop
+    q::Run,E:\bin1\foobar2000\foobar2000.exe /exit
+#IfWinActive
+
+;------------------------------------------------------------------------------
+;; MassiGra
+#If WinActive("ahk_class TF811202_MassiGra_Main")
+
+  Enter::Send,!{F4}
+  j::Send,{PgDn}
+  k::Send,{PgUp}
+  l::Send,{Right}
+  h::Send,{Left}
+  u::Send,+{PgUp}
+  i::Send,+{PgDn}
+  ;フォルダ移動 n=前 m=次
+  n::send,{up}
+  m::Send,{down}
+  ;拡大、縮小 ;=+ :=-
+  sc027::Send,{+}
+  sc028::Send,{-}
+
+#If
+
+;--------------------------------------------------------------------------------
+;PageOne
+#If WinActive("ahk_class WindowsForms10.Window.8.app.")
+  j::Send,{Down}
+  k::Send,{Up}
+  h::Send,{Left}
+  l::Send,{Right}
+#If
