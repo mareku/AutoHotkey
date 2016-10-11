@@ -315,26 +315,36 @@ CountReset(Reset, ByRef SizeChangeCount){
     SizeChangeCount:=1
   }
 }
+Half = 2
+HalfThree = 2.5
+OneThird = 1.66
+
 ;横のリサイズ計算
 WidthReSize(w, ByRef rW, count){
   if(count=1) {
     rW := w*1/2
   } else if(count=2) {
-    rW := w*1/3
+    ;rW := w*1/3
+    rW := w/1.66
   } else if(count=3) {
-    rW := w*2/3
+    ;rW := w*2/3
+    rW := w/2.5
   } else if(count=4) {
-    rW := w*2/3
+    ;rW := w*2/3
+    rW := w/2.5
   } else if(count=5) {
-    rW := w*1/3
+    ;rW := w*1/3
+    rW := w/1.66
   } else if(count=6) {
     rW := w*1/2
   } else if(count=7) {
     rW := w*1/2
   } else if(count=8) {
-    rW := w*2/3
+    ;rW := w*2/3
+    rW := w/2.5
   } else if(count=9) {
-    rW := w*1/3
+    ;rW := w*1/3
+    rW := w/1.66
   }
 }
 ;高さのリサイズ計算
@@ -363,17 +373,20 @@ HeightReSize(h, ByRef rH, count){
 ;上下左右のリサイズ
 SidesWidthResize(w, ByRef rW, count){
   if(count=1) {
-    rW := w*1/2
+    rW := w/2
   } else if(count=2) {
-    rW := w*1/3
+    ;rW := w*1/3
+    rW := w/1.666
   } else if(count=3) {
-    rW := w*2/3
+    ;rW := w*2/3
+    rW := w/2.5
   } else if(count=4) {
-    rW := w*1/2
+    ;rW := w*1/2
+    rW := w/2
   } else if(count=5) {
-    rW := w*1/3
+    rW := w/2.5
   } else if(count=6) {
-    rW := w*2/3
+    rW := w/3
  }
 }
 SidesHeightResize(h, ByRef rH, count){
